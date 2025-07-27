@@ -1,0 +1,19 @@
+.header {
+  background-color: #007bff;
+  color: white;
+  padding: 1rem 2rem;
+  margin: 1rem 2rem;
+  border-radius: 8px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.header-title {
+  font-size: 20px;
+  margin: 0;
+}
+
+.header-date {
+  font-size: 14px;
+}

@@ -1,0 +1,26 @@
+.todo-list {
+  margin-top: 32px;
+  padding: 16px;
+  background-color: #f3f4f6;
+  border-radius: 8px;
+}
+
+.todo-list h2 {
+  font-size: 20px;
+  margin-bottom: 16px;
+}
+
+.todo-list ul {
+  list-style: none;
+  padding: 0;
+}
+
+.todo-list li {
+  margin-bottom: 12px;
+  font-size: 16px;
+}
+
+.todo-list span {
+  font-style: italic;
+  color: #6b7280;
+}

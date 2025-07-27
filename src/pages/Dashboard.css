@@ -1,0 +1,27 @@
+/* src/pages/Dashboard.css */
+
+.dashboard-container {
+  display: flex;
+  width: 100%;
+  background-color: #f4f6f8;
+  font-family: Arial, sans-serif;
+}
+
+.main-content {
+  flex: 1;
+  padding: 1.5rem 2rem;
+}
+
+.dashboard-content {
+  background-color: #fff;
+  padding: 1.5rem;
+  border-radius: 8px;
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.05);
+}
+
+.course-list {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 1rem;
+  margin-top: 1rem;
+}
