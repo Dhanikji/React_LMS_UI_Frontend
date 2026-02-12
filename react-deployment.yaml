@@ -1,0 +1,21 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: react-lms
+  namespace: react-app
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: react-lms
+  template:
+    metadata:
+      labels:
+        app: react-lms
+    spec:
+      containers:
+        - name: react-lms
+          image: localhost:5000/react-lms:v1
+          imagePullPolicy: IfNotPresent
+          ports:
+            - containerPort: 80
