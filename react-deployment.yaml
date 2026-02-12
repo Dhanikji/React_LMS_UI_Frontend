@@ -15,7 +15,7 @@ spec:
     spec:
       containers:
         - name: react-lms
-          image: localhost:5000/react-lms:v1
-          imagePullPolicy: IfNotPresent
+          image: host.minikube.internal:5000/react-lms:v1
+          imagePullPolicy: Always
           ports:
             - containerPort: 80
