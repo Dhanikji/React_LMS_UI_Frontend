@@ -1,5 +1,5 @@
 # ---------- Build Stage ----------
-FROM docker.io/library/node:16 AS build
+FROM docker.io/library/node:20-alpine AS build
 
 WORKDIR /app
 
