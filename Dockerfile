@@ -2,19 +2,17 @@ FROM node:20 AS build
 
 WORKDIR /app
 
-# Downgrade npm to stable version for CI
 RUN npm install -g npm@9
 
 COPY package*.json ./
 
-# Use npm ci for clean, deterministic install
 RUN npm ci --legacy-peer-deps
 
 COPY . .
 
 RUN npm run build
 
-FROM nginx:alpine
+FROM docker.io/library/nginx:alpine
 
 COPY --from=build /app/build /usr/share/nginx/html
 
