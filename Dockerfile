@@ -2,12 +2,13 @@ FROM node:20 AS build
 
 WORKDIR /app
 
-# Downgrade npm to stable v9 (fixes Exit handler bug)
+# Downgrade npm to stable version for CI
 RUN npm install -g npm@9
 
 COPY package*.json ./
 
-RUN npm install --legacy-peer-deps
+# Use npm ci for clean, deterministic install
+RUN npm ci --legacy-peer-deps
 
 COPY . .
 
