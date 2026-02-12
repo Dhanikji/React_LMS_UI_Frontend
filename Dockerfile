@@ -1,4 +1,5 @@
-FROM docker.io/library/node:16-alpine AS build
+# ---------- Build Stage ----------
+FROM docker.io/library/node:16 AS build
 
 WORKDIR /app
 
@@ -10,6 +11,7 @@ COPY . .
 
 RUN npm run build
 
+# ---------- Production Stage ----------
 FROM docker.io/library/nginx:alpine
 
 COPY --from=build /app/build /usr/share/nginx/html
