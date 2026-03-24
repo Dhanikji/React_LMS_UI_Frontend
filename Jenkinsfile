@@ -2,7 +2,7 @@ pipeline {
     agent any
 
     environment {
-        IMAGE = "192.168.49.2:5000/react-lms:latest"
+        IMAGE = "192.168.49.1:5000/react-lms:latest"
     }
 
     stages {
