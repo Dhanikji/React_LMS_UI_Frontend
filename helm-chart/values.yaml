@@ -4,7 +4,7 @@ namespace: react-app
 replicaCount: 1
 
 image:
-  repository: 192.168.49.1:5000/react-lms
+  repository: host.containers.internal:5000/react-lms
   tag: latest
   pullPolicy: Always
 
