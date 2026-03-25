@@ -7,11 +7,15 @@ pipeline {
 
     stages {
 
+        stage('Clean') {
+            steps {
+                sh 'podman system prune -a -f || true'
+            }
+        }
+
         stage('Build Image') {
             steps {
-                sh '''
-                podman build -t react-lms:latest .
-                '''
+                sh 'podman build -t react-lms:latest .'
             }
         }
 
@@ -19,6 +23,7 @@ pipeline {
             steps {
                 sh '''
                 podman tag react-lms:latest $IMAGE
+                podman images
                 '''
             }
         }
@@ -33,17 +38,13 @@ pipeline {
 
         stage('Deploy') {
             steps {
-                sh '''
-                helm upgrade --install react-lms ./helm-chart -n react-app
-                '''
+                sh 'helm upgrade --install react-lms ./helm-chart -n react-app'
             }
         }
 
         stage('Verify') {
             steps {
-                sh '''
-                kubectl get pods -n react-app
-                '''
+                sh 'kubectl get pods -n react-app'
             }
         }
     }
