@@ -2,37 +2,26 @@ pipeline {
     agent any
 
     environment {
-        IMAGE = "host.containers.internal:5000/react-lms:latest"
+        IMAGE = "192.168.1.4:5000/react-lms:latest"
     }
 
     stages {
 
-        stage('Clean') {
-            steps {
-                sh 'podman system prune -a -f || true'
-            }
-        }
-
-        stage('Build Image') {
+        stage('Build') {
             steps {
                 sh 'podman build -t react-lms:latest .'
             }
         }
 
-        stage('Tag Image') {
+        stage('Tag') {
             steps {
-                sh '''
-                podman tag react-lms:latest $IMAGE
-                podman images
-                '''
+                sh 'podman tag react-lms:latest $IMAGE'
             }
         }
 
-        stage('Push Image') {
+        stage('Push') {
             steps {
-                sh '''
-                podman push --tls-verify=false $IMAGE
-                '''
+                sh 'podman push --tls-verify=false $IMAGE'
             }
         }
 
