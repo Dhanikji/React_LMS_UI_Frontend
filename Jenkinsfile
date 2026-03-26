@@ -1,33 +1,54 @@
 pipeline {
     agent any
     environment {
-        IMAGE = "registry.local:5000/react-lms:latest"
+        REGISTRY = "registry.local:5000"
+        APP_NAME = "react-lms"
+        IMAGE = "${REGISTRY}/${APP_NAME}:${BUILD_NUMBER}"
     }
     stages {
+        stage('Clone') {
+            steps {
+                git branch: 'main',
+                    url: 'https://github.com/Dhanikji/React_LMS_UI_Frontend.git'
+            }
+        }
         stage('Build') {
             steps {
-                sh 'podman build -t react-lms:latest .'
+                sh 'podman build -t ${APP_NAME}:${BUILD_NUMBER} .'
             }
         }
         stage('Tag') {
             steps {
-                sh 'podman tag react-lms:latest $IMAGE'
+                sh 'podman tag ${APP_NAME}:${BUILD_NUMBER} ${IMAGE}'
             }
         }
         stage('Push') {
             steps {
-                sh 'podman push --tls-verify=false $IMAGE'
+                sh 'podman push --tls-verify=false ${IMAGE}'
             }
         }
         stage('Deploy') {
             steps {
-                sh 'helm upgrade --install react-lms ./helm-chart -n react-app'
+                sh '''
+                    helm upgrade --install ${APP_NAME} ./helm-chart \
+                    -n react-app \
+                    --set image.repository=${REGISTRY}/${APP_NAME} \
+                    --set image.tag=${BUILD_NUMBER}
+                '''
             }
         }
         stage('Verify') {
             steps {
                 sh 'kubectl get pods -n react-app'
             }
+        }
+    }
+    post {
+        success {
+            echo "Build #${BUILD_NUMBER} deployed successfully! ✅"
+        }
+        failure {
+            echo "Build #${BUILD_NUMBER} failed! ❌"
         }
     }
 }
