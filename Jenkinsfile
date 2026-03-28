@@ -1,7 +1,7 @@
 pipeline {
     agent any
     environment {
-        REGISTRY = "registry.local:5000"
+        REGISTRY = "host.minikube.internal:5000"
         APP_NAME = "react-lms"
         IMAGE = "${REGISTRY}/${APP_NAME}:${BUILD_NUMBER}"
     }
@@ -30,7 +30,8 @@ pipeline {
         stage('Deploy') {
             steps {
                 sh '''
-                    helm upgrade --install ${APP_NAME} ./helm-chart \
+                    helm uninstall ${APP_NAME} -n react-app || true
+                    helm install ${APP_NAME} ./helm-chart \
                     -n react-app \
                     --set image.repository=${REGISTRY}/${APP_NAME} \
                     --set image.tag=${BUILD_NUMBER}
@@ -45,10 +46,10 @@ pipeline {
     }
     post {
         success {
-            echo "Build #${BUILD_NUMBER} deployed successfully! ✅"
+            echo "✅ Build #${BUILD_NUMBER} successfully deployed!"
         }
         failure {
-            echo "Build #${BUILD_NUMBER} failed! ❌"
+            echo "❌ Build #${BUILD_NUMBER} failed!"
         }
     }
 }
