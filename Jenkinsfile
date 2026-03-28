@@ -1,7 +1,7 @@
 pipeline {
     agent any
     environment {
-        REGISTRY = "host.minikube.internal:5000"
+        REGISTRY = "registry.local:5000"
         APP_NAME = "react-lms"
         IMAGE = "${REGISTRY}/${APP_NAME}:${BUILD_NUMBER}"
     }
