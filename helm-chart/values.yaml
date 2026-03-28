@@ -4,7 +4,7 @@ namespace: react-app
 replicaCount: 1
 
 image:
-  repository: registry.local:5000/react-lms
+  repository:  host.minikube.internal:5000/react-lms
   tag: latest
   pullPolicy: Always
 
